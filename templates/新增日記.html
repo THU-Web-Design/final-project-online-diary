@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 導覽列的style -->
+    <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+    
+        #drawer {
+          position: fixed;
+          top: 0;
+          left: -250px; /* 初始时隐藏在左侧 */
+          width: 250px;
+          height: 100%;
+          background-color: #333;
+          padding-top: 60px; /* 避免按钮覆盖上面的部分 */
+          transition: 0.3s;
+        }
+    
+        #drawer a {
+          padding: 15px;
+          text-decoration: none;
+          font-size: 18px;
+          color: white;
+          display: block;
+          transition: 0.3s;
+        }
+    
+        #main {
+          transition: margin-left 0.3s;
+          padding: 20px;
+        }
+    
+        #openBtn {
+          font-size: 30px;
+          cursor: pointer;
+        }
+      </style>
+  <!-- 導覽列的style -->
+  <style>
+    * {
+      font-family: 微軟正黑體;  
+  }
+    body {
+      background-color: rgb(249, 232, 195);
+      margin: 0;
+  }
+  /* #oldpost{
+    float:right;
+
+  } */
+  </style>
+
+    <!-- 搜索的style --> 
+    <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+         
+          align-items: center;
+          height: 100vh;
+          background-color: rgb(249, 232, 195);
+        }
+
+        .header {
+            display: flex;
+            align-items: center; /* 垂直居中 */
+        }
+    
+        #searchIcon {
+          font-size: 30px;
+          /* cursor: pointer; */
+          color: #000000;
+          margin-left: 300px;
+        }
+    
+        #searchModal {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 20px;
+          background-color: #ebf8fa;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        #searchModal h2 {
+          margin-top: 0;
+        }
+    
+        #closeSearchBtn,#SearchBtn {
+          font-size: 16px;
+          cursor: pointer;
+          color: #3c4958;
+        }
+
+      </style>
+    <!-- 搜索的style --> 
+</head>
+<body>
+   
+
+  <div class="container">
+      <div id="drawer">
+          <a href="個人資料.html">個人資料</a>
+          <a href="新增日記.html">我的日記</a>
+          <a href="關於我們.html">關於我們</a>
+      </div>
+  <div id="main">
+      <span id="openBtn" onclick="toggleDrawer()">&#9776; </span>
+      <h1>日常小記</h1>
+      <div id="oldpost">
+        <h1>舊舊日記</h1>
+        
+        {% if results %}
+            {% for result in results %}
+                <div id="resultBox">
+                    <label>{{ result.日期 }}的{{ result.心情 }}...</label><br><br>
+                    <textarea rows="5" cols="50" readonly>{{ result.內容 }}</textarea><br>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>沒有找到相關日記</p>
+        {% endif %}
+        
+        <!-- 其他舊舊日記的部分 -->
+    </div>
+        </div>
+
+
+    <span id="searchIcon" onclick="openSearchModal()">🔍要找日記？</span>
+
+    <div id="searchModal">
+        <form id="searchForm" action="/search" method="post">
+            <label for="searchType">找找看:</label>
+            <select id="searchType" name="searchType" onchange="selectSearchType()">
+                <option value="date">找日期</option>
+                <option value="mood">找心情</option>
+            </select><br><br>
+
+              <div id="dateSearchSection">
+                  <label for="date">選擇日期:</label>
+                  <input type="date" id="date" name="date"><br><br>
+              </div>
+          
+
+            <div id="moodSearchSection" style="display: none;">
+                <select id="mood" name="mood">
+                    <option value="很好">很好</option>
+                    <option value="還不錯">還不錯</option>
+                    <option value="普通">普通</option>
+                    <option value="不太好">不太好</option>
+                    <option value="很差">很差</option>
+                </select><br><br>
+            </div>
+
+            <button type="button" id="SearchBtn" onclick="performSearch()">查詢</button>
+            <button type="button" id="closeSearchBtn" onclick="closeSearchModal()">關閉</button>
+
+            <div id="searchResults"></div>
+        </form>
+
+    </div>
+
+    <!-- 在<head>標籤內添加以下代碼 -->
+    <script>
+      function openSearchModal() {
+        var searchModal = document.getElementById("searchModal");
+        searchModal.style.display = "block";
+    }
+
+    function closeSearchModal() {
+        var searchModal = document.getElementById("searchModal");
+        searchModal.style.display = "none";
+    }
+
+    function selectSearchType() {
+        var searchType = document.getElementById("searchType").value;
+        switchSearchMode(searchType + "SearchSection");
+    }
+
+    function switchSearchMode(mode) {
+        document.getElementById('dateSearchSection').style.display = mode === 'dateSearchSection' ? 'block' : 'none';
+        document.getElementById('moodSearchSection').style.display = mode === 'moodSearchSection' ? 'block' : 'none';
+    }
+
+    function performSearch() {
+        // 提交表單
+        document.getElementById("searchForm").submit();
+    }
+    
+    </script>
+  
+
+
+ <!-- 搜索 -->
+        
+ <form action="/save" method="post"  enctype="multipart/form-data">
+  <label for="diarytitle">標題：</label>
+  <input type="text" id="diarytitle" name="diarytitle"><br><br>
+   
+  <label for="date">選擇日期：</label>
+  <input type="date" id="date" name="date"><br><br>
+
+  <label>今日心情：</label>
+      <select id="mood" name="mood">
+          <option>請選擇</option>
+          <option value="很好">很好</option>
+          <option value="還不錯">還不錯</option>
+          <option value="普通">普通</option>
+          <option value="不太好">不太好</option>
+          <option value="很差">很差</option>
+      </select><br><br>
+  
+  <label>發生什麼事情了嗎？</label><br>
+  <textarea id="area" rows="10" cols="60" name="area"></textarea>
+
+  <br><br>
+
+  <button type="submit" id="savebtn">儲存</button><br><br>
+  </form>
+</div>
+
+  <script>
+      function toggleDrawer() {
+          var drawer = document.getElementById("drawer");
+          var main = document.getElementById("main");
+      
+          if (drawer.style.left === "0px") {
+            drawer.style.left = "-250px";
+            main.style.marginLeft = "0";
+          } else {
+            drawer.style.left = "0";
+            main.style.marginLeft = "250px";
+          }
+        }
+      </script>
+
+</body>
+</html>
+
+<!-- 新增 -->

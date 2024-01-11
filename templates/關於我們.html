@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 導覽列的style -->
+  <style>
+    * {
+      font-family: 微軟正黑體;  
+    }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #drawer {
+      position: fixed;
+      top: 0;
+      left: -250px; /* 初始时隐藏在左侧 */
+      width: 250px;
+      height: 100%;
+      background-color: #333;
+      padding-top: 60px; /* 避免按钮覆盖上面的部分 */
+      transition: 0.3s;
+    }
+
+    #drawer a {
+      padding: 15px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+    }
+
+    #main {
+      transition: margin-left 0.3s;
+      padding: 20px;
+    }
+
+    #openBtn {
+      font-size: 30px;
+      cursor: pointer;
+    }
+  </style>
+<!-- 導覽列的style -->
+    <style>
+        body, html {
+            background-color: rgb(249, 232, 195);
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .circle {
+            width: 50px;
+            height: 50px;
+            background-color: rgb(234, 171, 0);
+            position: absolute;
+            border-radius: 50%;
+            animation: moveCircle 15s linear infinite;
+        }
+
+        @keyframes moveCircle {
+            0% {
+                top: 0;
+                left: 0;
+            }
+            25% {
+                top: 0;
+                left: calc(100vw - 50px);
+            }
+            50% {
+                top: calc(100vh - 50px);
+                left: calc(100vw - 50px);
+            }
+            75% {
+                top: calc(100vh - 50px);
+                left: 0;
+            }
+            100% {
+                top: 0;
+                left: 0;
+            }
+        }
+
+        #colorPickerIcon {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        #colorPicker {
+            position: fixed;
+            top: 40px;
+            right: 10px;
+            display: none;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>圓形動畫</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="content">
+    <div id="drawer">
+        <a href="個人資料.html">個人資料</a>
+        <a href="新增日記.html">我的日記</a>
+        <a href="關於我們.html">關於我們</a>
+      </div>
+    <div id="main">
+        <span id="openBtn" onclick="toggleDrawer()">&#9776; </span>
+        <h1 class="centered-text">關於我們</h1>
+        <div class="centered-container">
+          <h2>我們是誰</h2>
+          <label>資工3B 陳秀君，資工3C 張筠妮</label>
+          <h2>我們在幹嘛</h2>
+          <label>我們想做一個讓小動物跑來跑去的畫面</label>
+          <p>但我們失敗了，我們只做出了一顆球，做不出小動物</p>
+      
+        </div>
+
+    <div id="colorPickerIcon">&#x1F3A8;小彩蛋</div>
+    <div id="colorPicker">
+        <input type="color" id="colorInput" />
+    </div>
+
+    <div class="circle"></div>
+    </div>
+    <!-- 導覽 -->
+    
+
+    <script>
+        const colorPickerIcon = document.getElementById('colorPickerIcon');
+        const colorPicker = document.getElementById('colorPicker');
+        const colorInput = document.getElementById('colorInput');
+        const circle = document.querySelector('.circle');
+
+        colorPickerIcon.addEventListener('click', () => {
+            colorPicker.style.display = 'block';
+        });
+
+        colorInput.addEventListener('input', () => {
+            const selectedColor = colorInput.value;
+            circle.style.backgroundColor = selectedColor;
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!colorPicker.contains(event.target) && event.target !== colorPickerIcon) {
+                colorPicker.style.display = 'none';
+            }
+        });
+    </script>
+    <script>
+      function toggleDrawer() {
+          var drawer = document.getElementById("drawer");
+          var main = document.getElementById("main");
+      
+          if (drawer.style.left === "0px") {
+            drawer.style.left = "-250px";
+            main.style.marginLeft = "0";
+          } else {
+            drawer.style.left = "0";
+            main.style.marginLeft = "250px";
+          }
+        }
+
+      </script>
+      
+      
+
+</body>
+</html>

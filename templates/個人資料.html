@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<!-- 導覽列的style -->
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+  
+      #drawer {
+        position: fixed;
+        top: 0;
+        left: -250px; /* 初始时隐藏在左侧 */
+        width: 250px;
+        height: 100%;
+        background-color: #333;
+        padding-top: 60px; /* 避免按钮覆盖上面的部分 */
+        transition: 0.3s;
+      }
+  
+      #drawer a {
+        padding: 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: rgb(255, 255, 255);
+        display: block;
+        transition: 0.3s;
+      }
+  
+      #main {
+        transition: margin-left 0.3s;
+        padding: 20px;
+      }
+  
+      #openBtn {
+        font-size: 30px;
+        cursor: pointer;
+      }
+    </style>
+<!-- 導覽列的style -->
+<style>
+  * {
+    font-family: 微軟正黑體;  
+}
+  body {
+    background-color: rgb(249, 232, 195);
+    margin: 0;
+}
+</style>
+
+<body>
+    <div class="content">
+        <div id="drawer">
+            <a href="個人資料.html">個人資料</a>
+            <a href="新增日記.html">我的日記</a>
+            <a href="關於我們.html">關於我們</a>
+          </div>
+        <div id="main">
+            <span id="openBtn" onclick="toggleDrawer()">&#9776; </span>
+            <h1>個人資料</h1>
+            <form action="/update" method='post'>
+                <label for="username">姓名</label>
+                <input type="text" id="username" name="username" placeholder="姓名" required>
+                <div class="tab"></div><br>
+    
+                <!-- <label for="account">用戶帳號</label>
+                <input type="text" id="account" name="account" placeholder="用戶帳號" required>
+                <div class="tab"></div><br>
+    
+                <label for="password">密碼</label>
+                <input type="password" id="password" name="password" placeholder="密碼" required>
+                <div class="tab"></div><br> -->
+    
+                <label for="gender">性別</label>
+                <input type="radio" id="gender" name="gender">女
+                <input type="radio" id="gender" name="gender">男
+                <div class="tab"></div><br>
+    
+                <label for="birthday">生日</label>
+                <input type="date" id="birthdate" name="birthdate" >
+                <div class="tab"></div><br>
+    
+                <button type="submit" id="savebtn">儲存</button>
+    
+    
+            </form>
+        </div>
+
+        <!-- 導覽 -->
+        <script>
+        function toggleDrawer() {
+            var drawer = document.getElementById("drawer");
+            var main = document.getElementById("main");
+        
+            if (drawer.style.left === "0px") {
+              drawer.style.left = "-250px";
+              main.style.marginLeft = "0";
+            } else {
+              drawer.style.left = "0";
+              main.style.marginLeft = "250px";
+            }
+          }
+        </script>
+        
+    </div>
+</body>
+</html>

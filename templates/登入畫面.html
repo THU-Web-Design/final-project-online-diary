@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            font-family: 微軟正黑體;  
+        }
+
+        body {
+            background-color: rgb(249, 232, 195);
+            margin: 0;
+        }
+        
+        #left-container {
+            float: left;
+            width: 50%;
+            height: 100vh;
+        }
+        
+        #left-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        #right-container {
+            float: right;
+            width: 50%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* 將內容以垂直方向排列 */
+            text-align: center; /* 將文字置中 */
+        }
+        
+        .system_name {
+            margin: 20px 0;
+            font-size: 50px;
+        }
+        
+        .login_page,
+        .signup_page {
+            width: 100%;
+            max-width: 400px; /* 設定最大寬度 */
+            font-size: 24px;
+        }
+        
+        .container1,
+        .container2 {
+            margin: 20px;
+            padding: 10px;
+            background-color: rgb(234, 228, 139);
+            border-radius: 5px;
+            border-top: 10px solid #df5334;
+            box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);
+            position: relative;
+            top: 20px;
+        }
+        
+        .submit {
+            color: white;
+            background: #df5334;
+            width: 100%;
+            height: 30px;
+            margin: 10px 0;
+            padding: 5px;
+            border-radius: 5px;
+            border: 0px;
+        }
+        
+        .submit:hover {
+            background: #db6937;
+        }
+        
+        #container2 {
+            display: none; /* 初始時註冊區塊隱藏 */
+        }
+        
+        #copyright {
+            text-align: center;
+            color: #a3a2a3;
+            margin: -200px 0 0 0;
+            font-size: 14px;
+        }
+        
+        input {
+            padding: 5px;
+            border: none;
+            border: solid 1px #ccc;
+            border-radius: 5px;
+            width: calc(100% - 10px); /* 計算寬度，考慮 padding 的寬度 */
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="left-container">
+      <img src="{{ url_for('static', filename='登入.jpg') }}" alt="Image">
+    </div>
+
+    <div id="right-container">
+        <div class="system_name">
+            <h1>日常小記</h1>
+        </div>
+      
+        <div class="login_page">
+            <div id="container1">
+                <div class="login">  
+                    <h3>登入 Login</h3>
+                    {% if error %}
+                    <p>{{ error }}</p>
+                    {% endif %}
+                    <form action="/login" method="post">
+                        <input type="text" id="username" name="username" placeholder="帳號" required>
+                        <input type="password" id="password" name="password" placeholder="密碼" required>
+                        <input type="submit" value="登入" class="submit" onclick="windows.location.href='/新增日記.html'"> 
+                    </form>
+                    <h5 onclick="show_hide()">註冊帳號</h5>
+                </div><!-- login end-->
+            </div><!-- container1 end-->
+        </div><!-- login_page end-->
+
+        <div class="signup_page">
+            <div id="container2">
+                <div class="signup">
+                    <h3>註冊 Sign Up</h3>
+                    <form action="/register" method="post">
+                        <input type="text" id="fullname" name="fullname" placeholder="使用者全名" required>
+                        <input type="text" id="username" name="username" placeholder="帳號" required>
+                        <input type="password" id="password" name="password" placeholder="密碼" required>
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="確認密碼" required>
+                        <input type="submit" value="註冊" class="submit" onclick="windows.location.href='/新增日記.html'">
+                    </form>
+                    <h5 onclick="show_hide()">登入帳號</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function show_hide() {
+            var login = document.getElementById("container1");
+            var signup = document.getElementById("container2");
+            var copyright = document.getElementById("copyright");
+          
+            if (login.style.display === "none") {
+                login.style.display = "block";
+                document.getElementById("username").value="";
+                document.getElementById("password").value="";
+                signup.style.display = "none";
+                copyright.style.margin = "200px 0px 0px 0px";
+            } else {
+                login.style.display = "none";
+                signup.style.display = "block";
+                signup.style.visibility="visible";
+                copyright.style.margin = "200px 0px 0px 0px";
+             
+                document.getElementById("fullname").value="";
+                document.getElementById("username2").value="";
+                document.getElementById("password2").value="";
+                document.getElementById("comfirm_password").value="";
+            }
+        }
+    </script>
+</body> 
+</html>
